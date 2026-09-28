@@ -2,6 +2,7 @@ import asyncio
 
 from app.database.session import async_session
 from app.models.user import User
+from app.core.security import hash_password
 
 
 async def main():
@@ -11,7 +12,7 @@ async def main():
         user = User(
             username="pezhman",
             email="test@test.com",
-            password_hash="hashed_password"
+            password_hash=hash_password("password123")
         )
 
 

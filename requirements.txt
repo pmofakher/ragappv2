@@ -17,3 +17,6 @@ psycopg2-binary
 pydantic-settings
 alembic
 greenlet
+pwdlib[argon2]
+python-jose[cryptography]
+python-multipart
