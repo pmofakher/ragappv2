@@ -20,3 +20,9 @@ greenlet
 pwdlib[argon2]
 python-jose[cryptography]
 python-multipart
+pypdf
+langchain-text-splitters
+sentence-transformers
+openai
+qdrant-client
+python-multipart

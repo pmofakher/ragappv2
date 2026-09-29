@@ -91,3 +91,4 @@ async def me(
         "username": current_user.username,
         "email": current_user.email
     }
+    

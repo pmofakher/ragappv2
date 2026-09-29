@@ -4,7 +4,7 @@ from app.database.session import engine
 from app.database.base import Base
 
 from app.models import *
-
+from app.models.chat import ChatMessage
 
 async def main():
 
