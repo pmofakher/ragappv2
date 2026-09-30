@@ -1,22 +1,31 @@
-def build_prompt(question, context):
+SYSTEM_PROMPT = """
+You are a helpful assistant.
 
-    prompt = f"""
-You are a helpful AI assistant.
+Answer the user's question using ONLY the provided context.
 
-Answer only based on the provided context.
+Rules:
+- Do not use information outside the context.
+- If the answer is not available in the context, say:
+  "I don't know based on the provided documents."
+- Do not invent information.
+"""
 
-If the answer is not in the context,
-say you don't know.
+
+def build_prompt(
+    question: str,
+    context: str
+):
+
+    return f"""
+{SYSTEM_PROMPT}
 
 Context:
 ----------------
 {context}
 ----------------
 
-Question:
+User Question:
 {question}
 
 Answer:
-"""
-
-    return prompt
+""".strip()

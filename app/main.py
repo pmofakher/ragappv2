@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.api.auth import router as auth_router
 from app.api.documents import router as document_router
+from app.api.rag import router as rag_router
 from app.api import search
 from app.api import chat
 
@@ -24,10 +25,7 @@ app.include_router(
     chat.router,
     prefix="/api"
 )
-
-
-
-
+app.include_router(rag_router)
 
 
 @app.get("/")

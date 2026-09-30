@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.services.rag import answer_question
+from app.services.rag import generate_rag_answer
 from app.services.chat import save_message
 from app.database.session import get_db
 from app.core.dependencies import get_current_user
@@ -27,7 +27,7 @@ async def chat(
 
 
     # RAG + LLM
-    result = answer_question(question,current_user.id)
+    result = generate_rag_answer(question,current_user.id)
 
 
     # save assistant answer
