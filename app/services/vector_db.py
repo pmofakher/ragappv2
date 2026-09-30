@@ -1,9 +1,15 @@
-from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient, models
 from qdrant_client.models import (
     VectorParams,
     Distance,
-    PointStruct
+    PointStruct,
+    FilterSelector,
+    Filter,
+    FieldCondition,
+    MatchValue
 )
+
+import asyncio
 
 from uuid import uuid4
 
@@ -60,20 +66,41 @@ def insert_chunks(
     ):
 
         points.append(
-    PointStruct(
-        id=str(uuid4()),
-        vector=vector,
-        payload={
-            "text": chunks,
-            "document_id": document_id,
-            "user_id": user_id,
-            "filename": filename
-        }
-    )
-)
+            PointStruct(
+                id=str(uuid4()),
+                vector=vector,
+                payload={
+                    "text": text,
+                    "document_id": document_id,
+                    "user_id": user_id,
+                    "filename": filename,
+                    "chunk_index": idx
+                }
+            )
+        )
 
 
     client.upsert(
         collection_name=COLLECTION_NAME,
         points=points
+    )
+
+
+async def delete_document_chunks(document_id: int):
+
+    await asyncio.to_thread(
+        client.delete,
+        collection_name=COLLECTION_NAME,
+        points_selector=FilterSelector(
+            filter=Filter(
+                must=[
+                    FieldCondition(
+                        key="document_id",
+                        match=MatchValue(
+                            value=document_id
+                        ),
+                    ),
+                ]
+            ),
+        )
     )

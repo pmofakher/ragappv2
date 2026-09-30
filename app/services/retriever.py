@@ -6,7 +6,8 @@ from qdrant_client.models import Filter, FieldCondition, MatchValue
 def search_similar_chunks(
     query: str,
     user_id: int,
-    limit: int = 5
+    limit: int = 5,
+    score_threshold: float = 0.0
 ):
 
     # 1. query embedding
@@ -31,14 +32,14 @@ def search_similar_chunks(
     )
 
 
-    chunks = []
-
-
     return [
         {
             "score": item.score,
-            "text": item.payload["text"],
-            "filename": item.payload["filename"]
+            "text": item.payload.get("text", ""),
+            "document_id": item.payload.get("document_id"),
+            "filename": item.payload.get("filename"),
+            "chunk_index": item.payload.get("chunk_index"),
         }
         for item in results
+        if item.score >= score_threshold
     ]

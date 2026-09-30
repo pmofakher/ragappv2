@@ -7,7 +7,7 @@ def build_context(
 
     for result in results:
 
-        text = result.payload.get("text", "").strip()
+        text = result.get("text", "").strip()
 
         if not text:
             continue

@@ -1,7 +1,7 @@
-from openai import OpenAI
+from openai import AsyncOpenAI
 from app.core.config import settings
 
-client = OpenAI(
+client = AsyncOpenAI(
     api_key=settings.LLM_API_KEY,
     base_url=settings.LLM_API_BASE
 )
