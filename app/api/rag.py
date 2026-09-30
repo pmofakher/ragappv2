@@ -19,18 +19,16 @@ router = APIRouter(
 
 @router.post(
     "/ask",
-    response_model=RAGResponse
+    response_model=RAGResponse,
 )
 async def ask(
     data: RAGRequest,
     current_user: User = Depends(get_current_user),
 ):
 
-    result = await generate_rag_answer(
+    return await generate_rag_answer(
         question=data.question,
         user_id=current_user.id,
         top_k=data.top_k,
         score_threshold=data.score_threshold,
     )
-
-    return result

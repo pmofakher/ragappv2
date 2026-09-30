@@ -8,19 +8,16 @@ client = OpenAI(
 
 
 
-def ask_llm(prompt: str):
+async def ask_llm(prompt: str):
 
-    response = client.chat.completions.create(
-
+    response = await client.chat.completions.create(
         model=settings.LLM_MODEL,
-
         messages=[
             {
                 "role": "user",
-                "content": prompt
+                "content": prompt,
             }
         ],
-        temperature=0
     )
 
     return response.choices[0].message.content
